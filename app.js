@@ -1,12 +1,21 @@
 const URL =
   'https://randomuser.me/api/?results=20&nat=us,dk,fr,gb&inc=gender,name,email,dob,phone,picture';
-
 const userListElement = document.querySelector('.user-list');
 const searchInputElement = document.querySelector(
   '.filter-options__search-input'
 );
+const genderInputElement = document.querySelector('.gender-sort');
+const genderAllInputElement = document.querySelector(
+  '.gender-sort__input--all'
+);
+const nameSortElement = document.querySelector('.name-sort');
+const resetButtonElement = document.querySelector(
+  '.filter-options__reset-button '
+);
 
 let userData = [];
+let isSortedByName = '';
+let isFilteredByGender = '';
 
 async function getData(url) {
   const response = await fetch(url);
@@ -81,10 +90,73 @@ async function init(url, container) {
 
 function handleSearch(e) {
   const { value: filterValue } = e.target;
-  const filteredUserData = filterUsersByName(userData, filterValue);
+
+  if (isFilteredByGender !== 'all') {
+    const arrayByGender = filterUsersByGender(
+      userData,
+      isFilteredByGender
+    );
+    const arrayByName = filterUsersByName(arrayByGender, filterValue);
+    renderUserElements(arrayByName, userListElement);
+  }
+
+  if (isFilteredByGender === 'all' || !isFilteredByGender) {
+    const filteredUserData = filterUsersByName(userData, filterValue);
+    renderUserElements(filteredUserData, userListElement);
+  }
+}
+
+function filterUsersByGender(data, filterValue) {
+  return data.filter((userItem) => userItem.gender === filterValue);
+}
+
+function sortUsersByName(data, filterValue) {
+  if (filterValue === 'az')
+    return [...data].sort((a, b) =>
+      a.fullName < b.fullName ? -1 : 1
+    );
+
+  return [...data].sort((a, b) => (a.fullName > b.fullname ? -1 : 1));
+}
+
+function handleGenderSort(e) {
+  const { value: filterValue } = e.target;
+  isFilteredByGender = filterValue;
+
+  searchInputElement.value = '';
+
+  if (filterValue !== 'all') {
+    const filteredUserData = filterUsersByGender(
+      userData,
+      filterValue
+    );
+    renderUserElements(filteredUserData, userListElement);
+    return;
+  }
+
+  if (filterValue === 'all') {
+    renderUserElements(userData, userListElement);
+    return;
+  }
+}
+
+function handleNameSort(e) {
+  const { value: filterValue } = e.target;
+  const filteredUserData = sortUsersByName(userData, filterValue);
+  searchInputElement.value = '';
   renderUserElements(filteredUserData, userListElement);
+  return;
+}
+
+function resetFilters() {
+  genderAllInputElement.checked = true;
+  isFilteredByGender = '';
+  renderUserElements(userData, userListElement);
 }
 
 searchInputElement.addEventListener('keyup', handleSearch);
+genderInputElement.addEventListener('change', handleGenderSort);
+nameSortElement.addEventListener('change', handleNameSort);
+resetButtonElement.addEventListener('click', resetFilters);
 
 init(URL, userListElement);

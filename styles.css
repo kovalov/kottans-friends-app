@@ -60,11 +60,24 @@ body {
 	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
+.filter-options__reset-button {
+	width: 100%;
+	padding: 0.5rem;
+	background-color: var(--primary-color);
+	color: var(--white-color);
+	border-radius: 5px;
+	border: 0;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+
 .filter-options__group {}
 
 .filter-options__search-input {
 	width: 100%;
-	padding: 0.5rem;
+	padding: 0.65rem 0.5rem;
+	margin-bottom: 1rem;
 	color: var(--black-color);
 	font-size: 1rem;
 	border: 1px solid var(--primary-color);
@@ -74,6 +87,32 @@ body {
 
 .filter-options__search-input::placeholder {
 	color: var(--primary-color);
+}
+
+.gender-sort,
+.name-sort,
+.age-sort {
+	margin-bottom: 1rem;
+	padding: 0.5rem;
+	display: flex;
+	justify-content: space-around;
+	border-radius: 5px;
+	border: 1px solid var(--primary-color);
+}
+
+.gender-sort__legend,
+.name-sort__legend,
+.age-sort__legend {
+	padding: 0 0.5rem;
+	color: var(--primary-color);
+}
+
+.gender-sort__group {}
+
+.gender-sort__input {
+}
+
+.gender-sort__label {
 }
 
 .main__user-list {}
@@ -141,8 +180,22 @@ body {
 }
 
 @media (min-width: 769px) {
+	.main__container {
+		display: flex;
+		gap: 1rem;
+	}
+
+	.main__filter-options {
+		flex: 1;
+		align-self: flex-start;
+	}
+
+	.user-list {
+		flex: 3;
+	}
+
 	.user-item {
-		flex-basis: calc(33.3% - 0.65rem);
+		flex-basis: calc(33.3% - 0.75rem);
 		display: flex;
 		flex-direction: column;
 		text-align: center;

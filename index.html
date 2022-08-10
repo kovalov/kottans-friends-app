@@ -8,7 +8,7 @@
       content="width=device-width, initial-scale=1.0"
     />
     <link rel="stylesheet" href="styles.css" />
-    <title>Document</title>
+    <title>Friends App</title>
   </head>
   <body>
     <header class="header">
@@ -26,6 +26,107 @@
               class="filter-options__search-input"
             />
           </div>
+          <fieldset class="filter-options__group gender-sort">
+            <legend class="gender-sort__legend">
+              Filter by gender
+            </legend>
+            <div class="gender-sort__group">
+              <input
+                type="radio"
+                name="gender-sort"
+                id="gender-sort-male"
+                value="male"
+                class="gender-sort__input"
+              />
+              <label for="gender-sort-male" class="gender-sort__label"
+                >Male</label
+              >
+            </div>
+            <div class="gender-sort__group">
+              <input
+                type="radio"
+                name="gender-sort"
+                id="gender-sort-female"
+                value="female"
+                class="gender-sort__input"
+              />
+              <label
+                for="gender-sort-female"
+                class="gender-sort__label"
+                >Female</label
+              >
+            </div>
+            <div class="gender-sort__group">
+              <input
+                type="radio"
+                name="gender-sort"
+                id="gender-sort-all"
+                value="all"
+                class="gender-sort__input gender-sort__input--all"
+                checked
+              />
+              <label for="gender-sort-all" class="gender-sort__label"
+                >All</label
+              >
+            </div>
+          </fieldset>
+          <fieldset class="filter-options__group age-sort">
+            <legend class="age-sort__legend">Filter by age</legend>
+            <div class="age-sort__group">
+              <input
+                type="radio"
+                name="age-sort"
+                id="age-sort-younger"
+                value="younger"
+                class="age-sort__input"
+                checked
+              />
+              <label for="age-sort-younger" class="age-sort__label"
+                >Younger</label
+              >
+            </div>
+            <div class="age-sort__group">
+              <input
+                type="radio"
+                name="age-sort"
+                id="age-sort-older"
+                value="older"
+                class="age-sort__input"
+              />
+              <label for="age-sort-older" class="age-sort__label"
+                >Older</label
+              >
+            </div>
+          </fieldset>
+          <fieldset class="filter-options__group name-sort">
+            <legend class="name-sort__legend">Filter by name</legend>
+            <div class="name-sort__group">
+              <input
+                type="radio"
+                name="name-sort"
+                id="name-sort-az"
+                value="az"
+                class="name-sort__input"
+                checked
+              />
+              <label for="name-sort-az" class="name-sort__label"
+                >Az</label
+              >
+            </div>
+            <div class="name-sort__group">
+              <input
+                type="radio"
+                name="name-sort"
+                id="name-sort-za"
+                value="za"
+                class="name-sort__input"
+              />
+              <label for="name-sort-za" class="name-sort__label"
+                >Za</label
+              >
+            </div>
+          </fieldset>
+          <button class="filter-options__reset-button">Reset</button>
         </div>
         <ul class="main__user-list user-list"></ul>
       </div>
