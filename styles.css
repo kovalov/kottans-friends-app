@@ -1,149 +1,161 @@
 :root {
-	--primary-color: #00a8ff;
-	--secondary-color: #f5f6fa;
-	--gray-color-light: #95a5a6;
-	--gray-color-dark: #34495e;
+	--primary-color: #54a0ff;
+	--white-color: #fff;
+	--black-color: #222f3e;
 }
 
 *,
 *::before,
 *::after {
 	box-sizing: border-box;
-	padding: 0;
 	margin: 0;
+	padding: 0;
 }
 
 body {
-	background-color: #00a8ff;
+	background-color: var(--primary-color);
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-.page-container {
-	max-width: 1400px;
+.header {
+	margin: 1rem;
+}
+
+.header__container {
+	max-width: 1200px;
 	margin: 0 auto;
 	padding: 0 1rem;
-}
-
-.main-header {
-	margin: 1rem;
+	background-color: var(--white-color);
 	border-radius: 5px;
-	background-color: white;
-	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.main-header__title {
+.header__title {
 	padding: 1rem 0;
 	display: block;
-	color: var(--gray-color-dark);
-	font-size: 2rem;
+	color: var(--black-color);
+	font-size: 1.5rem;
 	font-weight: 600;
 	text-decoration: none;
 	text-align: center;
 }
 
+.main {
+	padding: 0 1rem;
+}
+
+.main__container {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.main__filter-options {
+	margin-bottom: 1rem;
+	border-radius: 5px;
+	padding: 1rem;
+}
+
+.filter-options {
+	background-color: var(--white-color);
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.filter-options__group {}
+
+.filter-options__search-input {
+	width: 100%;
+	padding: 0.5rem;
+	color: var(--black-color);
+	font-size: 1rem;
+	border: 1px solid var(--primary-color);
+	border-radius: 5px;
+	outline: none;
+}
+
+.filter-options__search-input::placeholder {
+	color: var(--primary-color);
+}
+
+.main__user-list {}
+
 .user-list {
 	list-style: none;
-}
-
-.user-list__item {
 	margin-bottom: 1rem;
-	width: 100%;
+	word-break: break-all
+}
+
+.user-list__user-item {}
+
+.user-item {
 	padding: 1rem;
-	background-color: white;
-	border-radius: 5px;
 	display: flex;
+	margin-bottom: 1rem;
 	align-items: center;
-	justify-content: space-between;
-	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+	background-color: var(--white-color);
+	border-radius: 5px;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.user-list__item:last-child {
-	border-bottom: 0;
-}
-
-.user-list__item-image {
-	display: block;
-	height: 100px;
-	width: auto;
+.user-item__image {
+	width: 75px;
+	height: auto;
+	margin-right: 1rem;
 	border-radius: 50%;
-	border: 1px solid var(--gray-color-light);
-	aspect-ratio: 1 / 1;
+	border: 1px solid var(--primary-color);
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.user-list__details {
-	display: flex;
-	flex-direction: column;
-}
-
-.user-list__title {
+.user-item__title {
 	margin-bottom: 0.5rem;
-	color: #34495e;
 	font-size: 1.25rem;
-	font-weight: 600;
 }
 
-.user-list__title-icon {
-	height: 1rem;
-	width: 1rem;
-	margin-right: 0.5rem;
-	fill: var(--gray-color-light);
+.user-item__title-name {
+	color: var(--black-color);
 }
 
-.user-list__email {
+.user-item__email {
+	display: block;
 	margin-bottom: 0.25rem;
-	color: var(--gray-color-dark);
+	color: var(--primary-color);
 	text-decoration: none;
 }
 
-.user-list__email-icon {
-	height: 1rem;
-	width: 1rem;
-	margin-right: 0.5rem;
-	fill: var(--gray-color-light);
-}
-
-.user-list__number {
-	color: var(--gray-color-dark);
+.user-item__tel {
+	display: block;
+	color: var(--primary-color);
 	text-decoration: none;
 }
 
-.user-list__number-icon {
-	height: 1rem;
-	width: 1rem;
-	margin-right: 0.5rem;
-	fill: var(--gray-color-light);
-}
-
-@media (min-width: 720px) {
-	.main-section__container {
-		padding: 0 1rem;
-	}
-
+@media (min-width: 481px) {
 	.user-list {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: center;
 		gap: 1rem;
 	}
 
-	.user-list__item {
-		flex: 0 0 calc(50% - 0.5rem);
+	.user-item {
+		flex: 0 1 calc(50% - 0.5rem);
 		margin-bottom: 0;
-	}
-
-	.user-list__item:last-child {
-		flex-grow: 0;
 	}
 }
 
-@media (min-width: 1000px) {
-	.user-list__item {
-		flex: 0 0 calc(25% - 0.75rem);
+@media (min-width: 769px) {
+	.user-item {
+		flex-basis: calc(33.3% - 0.65rem);
 		display: flex;
 		flex-direction: column;
+		text-align: center;
 	}
 
-	.user-list__item-image {
+	.user-item__image {
+		margin-right: 0;
 		margin-bottom: 1rem;
+	}
+}
+
+@media (min-width: 1025px) {
+	.user-item {
+		flex-basis: calc(25% - 0.75rem);
 	}
 }
