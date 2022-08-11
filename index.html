@@ -70,62 +70,42 @@
               >
             </div>
           </fieldset>
-          <fieldset class="filter-options__group age-sort">
-            <legend class="age-sort__legend">Filter by age</legend>
-            <div class="age-sort__group">
-              <input
-                type="radio"
-                name="age-sort"
-                id="age-sort-younger"
-                value="younger"
-                class="age-sort__input"
-                checked
-              />
-              <label for="age-sort-younger" class="age-sort__label"
-                >Younger</label
-              >
-            </div>
-            <div class="age-sort__group">
-              <input
-                type="radio"
-                name="age-sort"
-                id="age-sort-older"
-                value="older"
-                class="age-sort__input"
-              />
-              <label for="age-sort-older" class="age-sort__label"
-                >Older</label
-              >
-            </div>
-          </fieldset>
-          <fieldset class="filter-options__group name-sort">
-            <legend class="name-sort__legend">Filter by name</legend>
-            <div class="name-sort__group">
-              <input
-                type="radio"
-                name="name-sort"
-                id="name-sort-az"
-                value="az"
-                class="name-sort__input"
-                checked
-              />
-              <label for="name-sort-az" class="name-sort__label"
-                >Az</label
-              >
-            </div>
-            <div class="name-sort__group">
-              <input
-                type="radio"
-                name="name-sort"
-                id="name-sort-za"
-                value="za"
-                class="name-sort__input"
-              />
-              <label for="name-sort-za" class="name-sort__label"
-                >Za</label
-              >
-            </div>
-          </fieldset>
+          <div class="filter-options__group name-sort">
+            <button
+              value="ascending"
+              class="name-sort__button name-sort__button--ascending"
+            >
+              <svg class="name-sort__button-icon">
+                <use href="sprite.svg#sort-alpha-down"></use>
+              </svg>
+            </button>
+            <button
+              value="descending"
+              class="name-sort__button name-sort__button--descending"
+            >
+              <svg class="name-sort__button-icon">
+                <use href="sprite.svg#sort-alpha-up"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="filter-options__group age-sort">
+            <button
+              value="ascending"
+              class="age-sort__button age-sort__button--ascending"
+            >
+              <svg class="age-sort__button-icon">
+                <use href="sprite.svg#sort-numeric-up"></use>
+              </svg>
+            </button>
+            <button
+              value="descending"
+              class="age-sort__button age-sort__button--descending"
+            >
+              <svg class="age-sort__button-icon">
+                <use href="sprite.svg#sort-numeric-down"></use>
+              </svg>
+            </button>
+          </div>
           <button class="filter-options__reset-button">Reset</button>
         </div>
         <ul class="main__user-list user-list"></ul>

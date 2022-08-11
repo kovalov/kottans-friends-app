@@ -5,17 +5,19 @@ const searchInputElement = document.querySelector(
   '.filter-options__search-input'
 );
 const genderInputElement = document.querySelector('.gender-sort');
-const genderAllInputElement = document.querySelector(
-  '.gender-sort__input--all'
-);
-const nameSortElement = document.querySelector('.name-sort');
-const resetButtonElement = document.querySelector(
-  '.filter-options__reset-button '
-);
+// const genderAllInputElement = document.querySelector(
+//   '.gender-sort__input--all'
+// );
+const nameSortInputElement = document.querySelector('.name-sort');
+const ageSortInputElement = document.querySelector('.age-sort');
+// const resetButtonElement = document.querySelector(
+//   '.filter-options__reset-button '
+// );
 
 let userData = [];
-let isSortedByName = '';
 let isFilteredByGender = '';
+let isSortedByNameOrder = '';
+let isSortedByAgeOrder = '';
 
 async function getData(url) {
   const response = await fetch(url);
@@ -36,7 +38,7 @@ async function getUserData(url) {
 }
 
 function createUserElement(data) {
-  const { fullName, gender, email, age, phone, imageUrl } = data;
+  const { fullName, email, age, phone, imageUrl } = data;
   const element = document.createElement('li');
   element.classList.add('user-list__user-item', 'user-item');
   element.innerHTML = `
@@ -83,80 +85,120 @@ function filterUsersByName(data, filterValue) {
   );
 }
 
-async function init(url, container) {
-  userData = await getUserData(url);
-  renderUserElements([...userData], container);
-}
-
-function handleSearch(e) {
-  const { value: filterValue } = e.target;
-
-  if (isFilteredByGender !== 'all') {
-    const arrayByGender = filterUsersByGender(
-      userData,
-      isFilteredByGender
-    );
-    const arrayByName = filterUsersByName(arrayByGender, filterValue);
-    renderUserElements(arrayByName, userListElement);
-  }
-
-  if (isFilteredByGender === 'all' || !isFilteredByGender) {
-    const filteredUserData = filterUsersByName(userData, filterValue);
-    renderUserElements(filteredUserData, userListElement);
-  }
-}
-
 function filterUsersByGender(data, filterValue) {
+  if (filterValue === 'all') return data;
+
   return data.filter((userItem) => userItem.gender === filterValue);
 }
 
-function sortUsersByName(data, filterValue) {
-  if (filterValue === 'az')
+function sortUsersByName(data, sortOrder) {
+  if (sortOrder === 'ascending') {
     return [...data].sort((a, b) =>
       a.fullName < b.fullName ? -1 : 1
     );
+  }
 
-  return [...data].sort((a, b) => (a.fullName > b.fullname ? -1 : 1));
-}
-
-function handleGenderSort(e) {
-  const { value: filterValue } = e.target;
-  isFilteredByGender = filterValue;
-
-  searchInputElement.value = '';
-
-  if (filterValue !== 'all') {
-    const filteredUserData = filterUsersByGender(
-      userData,
-      filterValue
+  if (sortOrder === 'descending')
+    return [...data].sort((a, b) =>
+      a.fullName > b.fullname ? -1 : 1
     );
-    renderUserElements(filteredUserData, userListElement);
-    return;
+}
+
+function sortUsersByAge(data, sortOrder) {
+  if (sortOrder === 'ascending') {
+    return [...data].sort((a, b) => (a.age < b.age ? -1 : 1));
   }
 
-  if (filterValue === 'all') {
-    renderUserElements(userData, userListElement);
-    return;
+  if (sortOrder === 'descending') {
+    return [...data].sort((a, b) => (a.age > b.age ? -1 : 1));
   }
 }
 
-function handleNameSort(e) {
-  const { value: filterValue } = e.target;
-  const filteredUserData = sortUsersByName(userData, filterValue);
-  searchInputElement.value = '';
+async function init(url, container) {
+  userData = await getUserData(url);
+  renderUserElements(userData, container);
+}
+
+function handleSearch({ target }) {
+  const { value: filterValue } = target;
+  let filteredByParamArray = '';
+
+  if (isFilteredByGender) {
+    filteredByParamArray = filterUsersByGender(
+      userData,
+      isFilteredByGender
+    );
+  }
+
+  if (isSortedByNameOrder) {
+    filteredByParamArray = sortUsersByName(
+      userData,
+      isSortedByNameOrder
+    );
+  }
+
+  if (isSortedByAgeOrder) {
+    filteredByParamArray = sortUsersByAge(
+      userData,
+      isSortedByAgeOrder
+    );
+  }
+
+  const filteredUserData = filterUsersByName(
+    filteredByParamArray,
+    filterValue
+  );
   renderUserElements(filteredUserData, userListElement);
   return;
 }
 
-function resetFilters() {
-  genderAllInputElement.checked = true;
-  isFilteredByGender = '';
-  renderUserElements(userData, userListElement);
+function handleGenderSort({ target }) {
+  isFilteredByGender = target.value;
+
+  const filteredUserData = filterUsersByGender(
+    userData,
+    isFilteredByGender
+  );
+  renderUserElements(filteredUserData, userListElement);
+  return;
 }
+
+function handleNameSort({ target }) {
+  if (!target.closest('.name-sort__button')) return;
+
+  isSortedByNameOrder = target.closest('.name-sort__button').value;
+
+  const filteredUserData = sortUsersByName(
+    userData,
+    isSortedByNameOrder
+  );
+  renderUserElements(filteredUserData, userListElement);
+  return;
+}
+
+function handleAgeSort({ target }) {
+  if (!target.closest('.age-sort__button')) return;
+
+  isSortedByAgeOrder = target.closest('.age-sort__button').value;
+
+  const filteredUserData = sortUsersByAge(
+    userData,
+    isSortedByAgeOrder
+  );
+  renderUserElements(filteredUserData, userListElement);
+  return;
+}
+
+// function resetFilters() {
+//   genderAllInputElement.checked = true;
+//   isFilteredByGender = '';
+//   renderUserElements(userData, userListElement);
+// }
 
 searchInputElement.addEventListener('keyup', handleSearch);
 genderInputElement.addEventListener('change', handleGenderSort);
-nameSortElement.addEventListener('change', handleNameSort);
-resetButtonElement.addEventListener('click', resetFilters);
+nameSortInputElement.addEventListener('click', handleNameSort);
+ageSortInputElement.addEventListener('click', handleAgeSort);
+// resetButtonElement.addEventListener('click', resetFilters);
 
 init(URL, userListElement);

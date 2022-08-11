@@ -12,6 +12,10 @@
 	padding: 0;
 }
 
+html {
+	margin-left: calc(100vw - 100%);
+}
+
 body {
 	background-color: var(--primary-color);
 	font-family: Arial, Helvetica, sans-serif;
@@ -22,7 +26,7 @@ body {
 }
 
 .header__container {
-	max-width: 1200px;
+	max-width: 1600px;
 	margin: 0 auto;
 	padding: 0 1rem;
 	background-color: var(--white-color);
@@ -45,7 +49,7 @@ body {
 }
 
 .main__container {
-	max-width: 1200px;
+	max-width: 1600px;
 	margin: 0 auto;
 }
 
@@ -62,7 +66,7 @@ body {
 
 .filter-options__reset-button {
 	width: 100%;
-	padding: 0.5rem;
+	padding: 1rem;
 	background-color: var(--primary-color);
 	color: var(--white-color);
 	border-radius: 5px;
@@ -92,7 +96,7 @@ body {
 .gender-sort,
 .name-sort,
 .age-sort {
-	margin-bottom: 1rem;
+	margin-bottom: 1.5rem;
 	padding: 0.5rem;
 	display: flex;
 	justify-content: space-around;
@@ -100,19 +104,45 @@ body {
 	border: 1px solid var(--primary-color);
 }
 
-.gender-sort__legend,
-.name-sort__legend,
-.age-sort__legend {
+.gender-sort__legend {
 	padding: 0 0.5rem;
 	color: var(--primary-color);
 }
 
-.gender-sort__group {}
-
-.gender-sort__input {
+.name-sort,
+.age-sort {
+	padding: 1rem;
+	position: relative;
 }
 
-.gender-sort__label {
+.name-sort__button,
+.age-sort__button {
+	border: 0;
+	background-color: transparent;
+}
+
+.name-sort__button-icon,
+.age-sort__button-icon {
+	height: 1.5rem;
+	width: 1.5rem;
+}
+
+.name-sort::after,
+.age-sort::after {
+	top: -0.5rem;
+	left: 0.5rem;
+	position: absolute;
+	padding: 0 0.5rem;
+	color: var(--primary-color);
+	background-color: var(--white-color);
+}
+
+.name-sort::after {
+	content: 'Filter by name';
+}
+
+.age-sort::after {
+	content: 'Filter by age';
 }
 
 .main__user-list {}
@@ -196,9 +226,13 @@ body {
 
 	.user-item {
 		flex-basis: calc(33.3% - 0.75rem);
+		align-self: flex-start;
+		height: 250px;
 		display: flex;
 		flex-direction: column;
 		text-align: center;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.user-item__image {
