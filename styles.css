@@ -69,6 +69,10 @@ body {
 
 .filter-options__name-search-control {
 	width: 100%;
+	padding: 0.5rem;
+	border-radius: var(--rounded);
+	border: 1px solid var(--primary-color);
+	outline: none;
 }
 
 .filter-options__button {
