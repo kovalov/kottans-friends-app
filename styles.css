@@ -90,6 +90,7 @@ body {
 
 .user-list {
 	list-style: none;
+	margin-bottom: 1rem;
 }
 
 .user-list__item {
