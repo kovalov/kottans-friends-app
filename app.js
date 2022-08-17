@@ -1,14 +1,15 @@
-const AGE = 'ageOrder';
-const NAME = 'nameOrder';
-
 const URL =
   'https://randomuser.me/api/?results=20&nat=us,dk,fr,gb&inc=gender,name,email,dob,phone,picture';
 
 const userListContainerElement = document.querySelector('.user-list');
-const formElement = document.querySelector('.filter-options');
+const formElement = document.querySelector('.form');
+const formSearchInputElement = document.querySelector(
+  '.form__search-control'
+);
 
 let userData = [];
 let sortedUserData = [];
+let currentSearchValue = '';
 
 const handleErrors = (response) => {
   if (!response.ok) throw Error(response.statusText);
@@ -118,12 +119,13 @@ const nameSorters = {
 
 const handleFormChange = ({ target: radioButton }) => {
   const sorter =
-    radioButton.name === AGE
+    radioButton.name === 'sorting'
       ? ageSorters[radioButton.value]
       : nameSorters[radioButton.value];
 
   sorter();
-  renderUserList(sortedUserData);
+  const filteredUserData = findName(currentSearchValue);
+  renderUserList(filteredUserData);
 };
 
 const findName = (searchInput) => {
@@ -135,6 +137,7 @@ const findName = (searchInput) => {
 };
 
 const handleFormKeyUp = ({ target: searchInput }) => {
+  currentSearchValue = searchInput.value;
   const foundUserData = findName(searchInput.value);
   renderUserList(foundUserData);
 };
@@ -145,8 +148,8 @@ const handleFormReset = () => {
 
 const handleFormSubmit = (e) => e.preventDefault();
 
+formSearchInputElement.addEventListener('keyup', handleFormKeyUp);
 formElement.addEventListener('change', handleFormChange);
-formElement.addEventListener('keyup', handleFormKeyUp);
 formElement.addEventListener('reset', handleFormReset);
 formElement.addEventListener('submit', handleFormSubmit);
 
