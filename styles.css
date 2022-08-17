@@ -20,9 +20,10 @@
 }
 
 body {
+	padding: 0 1rem;
+	margin-left: calc(100vw - 100%);
 	background-color: var(--primary-color);
 	font-family: var(--main-font-stack);
-	padding: 0 1rem;
 }
 
 .header {
@@ -104,8 +105,27 @@ body {
 }
 
 .user-list {
+	position: relative;
 	list-style: none;
 	margin-bottom: 1rem;
+}
+
+.user-list__loading {
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 6rem;
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.user-list__loading-item {
+	display: inline-block;
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: var(--white-color);
 }
 
 .user-list__item {
