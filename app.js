@@ -96,10 +96,10 @@ const compareAge = (firstUser, secondUser) => {
 };
 
 const ageSorters = {
-  descending: () => {
+  ageDescending: () => {
     sortedUserData.sort((a, b) => compareAge(b, a));
   },
-  ascending: () => {
+  ageAscending: () => {
     sortedUserData.sort(compareAge);
   },
 };
@@ -109,17 +109,18 @@ const compareName = (firstUser, secondUser) => {
 };
 
 const nameSorters = {
-  descending: () => {
+  nameDescending: () => {
     sortedUserData.sort((a, b) => compareName(b, a));
   },
-  ascending: () => {
+  nameAscending: () => {
     sortedUserData.sort(compareName);
   },
 };
 
 const handleFormChange = ({ target: radioButton }) => {
   const sorter =
-    radioButton.name === 'sorting'
+    radioButton.value === 'ageAscending' ||
+    radioButton.value === 'ageDescending'
       ? ageSorters[radioButton.value]
       : nameSorters[radioButton.value];
 
