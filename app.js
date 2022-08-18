@@ -10,6 +10,7 @@ const formSearchInputElement = document.querySelector(
 let userData = [];
 let sortedUserData = [];
 let currentSearchValue = '';
+let currentGenderValue = '';
 
 const handleErrors = (response) => {
   if (!response.ok) throw Error(response.statusText);
@@ -117,6 +118,20 @@ const nameSorters = {
   },
 };
 
+const findName = (searchInput) => {
+  return sortedUserData.filter((userDataItem) =>
+    userDataItem.fullName
+      .toLowerCase()
+      .includes(searchInput.toLowerCase())
+  );
+};
+
+const filterUsersByGender = (gender) => {
+  return sortedUserData.filter(
+    (userItem) => userItem.gender === gender
+  );
+};
+
 const handleFormChange = ({ target: radioButton }) => {
   const sorter =
     radioButton.value === 'ageAscending' ||
@@ -125,16 +140,8 @@ const handleFormChange = ({ target: radioButton }) => {
       : nameSorters[radioButton.value];
 
   sorter();
-  const filteredUserData = findName(currentSearchValue);
-  renderUserList(filteredUserData);
-};
-
-const findName = (searchInput) => {
-  return sortedUserData.filter((userDataItem) =>
-    userDataItem.fullName
-      .toLowerCase()
-      .includes(searchInput.toLowerCase())
-  );
+  const filteredByNameUserData = findName(currentSearchValue);
+  renderUserList(filteredByNameUserData);
 };
 
 const handleFormKeyUp = ({ target: searchInput }) => {
