@@ -3,14 +3,14 @@ const URL =
 
 const userListContainerElement = document.querySelector('.user-list');
 const formElement = document.querySelector('.form');
-const formSearchInputElement = document.querySelector(
-  '.form__search-control'
-);
+// const formSearchInputElement = document.querySelector(
+//   '.form__search-control'
+// );
 
 let userData = [];
 let sortedUserData = [];
-let currentSearchValue = '';
-let currentGenderValue = '';
+// let currentSearchValue = '';
+// let currentGenderValue = '';
 
 const handleErrors = (response) => {
   if (!response.ok) throw Error(response.statusText);
@@ -92,6 +92,14 @@ const init = async (url) => {
   renderUserList(userData);
 };
 
+const findName = (searchInput) => {
+  return userData.filter((userDataItem) =>
+    userDataItem.fullName
+      .toLowerCase()
+      .includes(searchInput.toLowerCase())
+  );
+};
+
 const compareAge = (firstUser, secondUser) => {
   return firstUser.age - secondUser.age;
 };
@@ -118,47 +126,41 @@ const nameSorters = {
   },
 };
 
-const findName = (searchInput) => {
-  return sortedUserData.filter((userDataItem) =>
-    userDataItem.fullName
-      .toLowerCase()
-      .includes(searchInput.toLowerCase())
-  );
+const filterUsersByGender = (gender, data) => {
+  return data.filter((dataItem) => dataItem.gender === gender);
 };
 
-const filterUsersByGender = (gender) => {
-  return sortedUserData.filter(
-    (userItem) => userItem.gender === gender
-  );
+const getFilteredUsersByGender = (gender, data) => {
+  if (gender === 'male' || gender === 'female') {
+    sortedUserData = filterUsersByGender(gender, data);
+  }
 };
 
-const handleFormChange = ({ target: radioButton }) => {
-  const sorter =
-    radioButton.value === 'ageAscending' ||
-    radioButton.value === 'ageDescending'
-      ? ageSorters[radioButton.value]
-      : nameSorters[radioButton.value];
-
-  sorter();
-  const filteredByNameUserData = findName(currentSearchValue);
-  renderUserList(filteredByNameUserData);
+const getSortedUsersByAge = (value) => {
+  if (value === 'ageAscending' || value === 'ageDescending') {
+    ageSorters[value]();
+  }
 };
 
-const handleFormKeyUp = ({ target: searchInput }) => {
-  currentSearchValue = searchInput.value;
-  const foundUserData = findName(searchInput.value);
-  renderUserList(foundUserData);
+const getSortedUsersByName = (value) => {
+  if (value === 'nameAscending' || value === 'nameDescending') {
+    nameSorters[value]();
+  }
 };
 
-const handleFormReset = () => {
-  renderUserList(userData);
+const handleFormInputs = () => {
+  const { value: searchValue } = formElement.search;
+  const { value: sortingValue } = formElement.sorting;
+  const { value: filteringValue } = formElement.filtering;
+
+  const foundNames = findName(searchValue);
+  getFilteredUsersByGender(filteringValue, foundNames);
+  getSortedUsersByAge(sortingValue);
+  getSortedUsersByName(sortingValue);
+
+  renderUserList(sortedUserData);
 };
 
-const handleFormSubmit = (e) => e.preventDefault();
-
-formSearchInputElement.addEventListener('keyup', handleFormKeyUp);
-formElement.addEventListener('change', handleFormChange);
-formElement.addEventListener('reset', handleFormReset);
-formElement.addEventListener('submit', handleFormSubmit);
+formElement.addEventListener('input', handleFormInputs);
 
 init(URL);
