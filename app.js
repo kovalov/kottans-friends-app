@@ -114,16 +114,13 @@ const filterUsersByGender = (selectedGender) => {
   );
 };
 
-const ageSorters = {
+const sorters = {
   ageDescending: () => {
     sortedUserData.sort((a, b) => compareAge(b, a));
   },
   ageAscending: () => {
     sortedUserData.sort(compareAge);
   },
-};
-
-const nameSorters = {
   nameDescending: () => {
     sortedUserData.sort((a, b) => compareName(b, a));
   },
@@ -139,12 +136,7 @@ const handleFormInputs = () => {
 
   sortedUserData = findName(searchValue);
   sortedUserData = filterUsersByGender(filteringValue);
-  const sorter =
-    sortingValue === 'nameAscending' ||
-    sortingValue === 'nameDescending'
-      ? nameSorters[sortingValue]
-      : ageSorters[sortingValue];
-  sorter();
+  sorters[sortingValue]();
 
   renderUserList(sortedUserData);
 };
