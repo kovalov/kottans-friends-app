@@ -6,9 +6,6 @@ const formElement = document.querySelector('.form');
 const resetButtonElement = document.querySelector(
   '.form__reset-button'
 );
-// const formSearchInputElement = document.querySelector(
-//   '.form__search-control'
-// );
 
 let userData = [];
 let sortedUserData = [];
@@ -105,6 +102,18 @@ const compareAge = (firstUser, secondUser) => {
   return firstUser.age - secondUser.age;
 };
 
+const compareName = (firstUser, secondUser) => {
+  return firstUser.fullName > secondUser.fullName ? 1 : -1;
+};
+
+const filterUsersByGender = (selectedGender) => {
+  if (!selectedGender) return sortedUserData;
+
+  return sortedUserData.filter(
+    ({ gender: userGender }) => userGender === selectedGender
+  );
+};
+
 const ageSorters = {
   ageDescending: () => {
     sortedUserData.sort((a, b) => compareAge(b, a));
@@ -112,10 +121,6 @@ const ageSorters = {
   ageAscending: () => {
     sortedUserData.sort(compareAge);
   },
-};
-
-const compareName = (firstUser, secondUser) => {
-  return firstUser.fullName > secondUser.fullName ? 1 : -1;
 };
 
 const nameSorters = {
@@ -127,39 +132,19 @@ const nameSorters = {
   },
 };
 
-const filterUsersByGender = (selectedGender) => {
-  return sortedUserData.filter(
-    ({ gender: userGender }) => userGender === selectedGender
-  );
-};
-
-const getFilteredUsersByGender = (selectedGender) => {
-  if (selectedGender === 'male' || selectedGender === 'female') {
-    sortedUserData = filterUsersByGender(selectedGender);
-  }
-};
-
-const getSortedUsersByAge = (value) => {
-  if (value === 'ageAscending' || value === 'ageDescending') {
-    ageSorters[value]();
-  }
-};
-
-const getSortedUsersByName = (value) => {
-  if (value === 'nameAscending' || value === 'nameDescending') {
-    nameSorters[value]();
-  }
-};
-
 const handleFormInputs = () => {
   const { value: searchValue } = formElement.search;
   const { value: sortingValue } = formElement.sorting;
   const { value: filteringValue } = formElement.filtering;
 
   sortedUserData = findName(searchValue);
-  getSortedUsersByAge(sortingValue);
-  getSortedUsersByName(sortingValue);
-  getFilteredUsersByGender(filteringValue);
+  sortedUserData = filterUsersByGender(filteringValue);
+  const sorter =
+    sortingValue === 'nameAscending' ||
+    sortingValue === 'nameDescending'
+      ? nameSorters[sortingValue]
+      : ageSorters[sortingValue];
+  sorter();
 
   renderUserList(sortedUserData);
 };
