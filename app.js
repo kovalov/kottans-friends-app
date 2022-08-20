@@ -127,67 +127,39 @@ const nameSorters = {
   },
 };
 
-const filterUsersByGender = (selectedGender, data) => {
-  return data.filter(
+const filterUsersByGender = (selectedGender) => {
+  return sortedUserData.filter(
     ({ gender: userGender }) => userGender === selectedGender
   );
 };
 
-// const getFilteredUsersByGender = (selectedGender, data) => {
-//   if (selectedGender === 'male' || selectedGender === 'female') {
-//     sortedUserData = filterUsersByGender(selectedGender, data);
-//   }
-// };
+const getFilteredUsersByGender = (selectedGender) => {
+  if (selectedGender === 'male' || selectedGender === 'female') {
+    sortedUserData = filterUsersByGender(selectedGender);
+  }
+};
 
-// const getSortedUsersByAge = (value) => {
-//   if (value === 'ageAscending' || value === 'ageDescending') {
-//     ageSorters[value]();
-//   }
-// };
+const getSortedUsersByAge = (value) => {
+  if (value === 'ageAscending' || value === 'ageDescending') {
+    ageSorters[value]();
+  }
+};
 
-// const getSortedUsersByName = (value) => {
-//   if (value === 'nameAscending' || value === 'nameDescending') {
-//     nameSorters[value]();
-//   }
-// };
+const getSortedUsersByName = (value) => {
+  if (value === 'nameAscending' || value === 'nameDescending') {
+    nameSorters[value]();
+  }
+};
 
 const handleFormInputs = () => {
   const { value: searchValue } = formElement.search;
   const { value: sortingValue } = formElement.sorting;
   const { value: filteringValue } = formElement.filtering;
 
-  sortedUserData = userData.filter(({ fullName }) =>
-    fullName.toLowerCase().includes(searchValue.toLowerCase())
-  );
-
-  if (
-    sortingValue === 'ageAscending' ||
-    sortingValue === 'ageDescending'
-  ) {
-    if (sortingValue === 'ageDescending')
-      sortedUserData.sort((a, b) => compareAge(b, a));
-    if (sortingValue === 'ageAscending')
-      sortedUserData.sort(compareAge);
-  }
-
-  if (
-    sortingValue === 'nameAscending' ||
-    sortingValue === 'nameDescending'
-  ) {
-    if (sortingValue === 'nameDescending') {
-      sortedUserData.sort((a, b) => compareName(b, a));
-    }
-
-    if (sortingValue === 'nameAscending') {
-      sortedUserData.sort(compareName);
-    }
-  }
-
-  if (filteringValue === 'male' || filteringValue === 'female') {
-    sortedUserData = sortedUserData.filter(
-      ({ gender }) => gender === filteringValue
-    );
-  }
+  sortedUserData = findName(searchValue);
+  getSortedUsersByAge(sortingValue);
+  getSortedUsersByName(sortingValue);
+  getFilteredUsersByGender(filteringValue);
 
   renderUserList(sortedUserData);
 };
