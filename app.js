@@ -3,9 +3,12 @@ const URL =
 
 const userListContainerElement = document.querySelector('.user-list');
 const formElement = document.querySelector('.form');
-const formSearchInputElement = document.querySelector(
-  '.form__search-control'
+const resetButtonElement = document.querySelector(
+  '.form__reset-button'
 );
+// const formSearchInputElement = document.querySelector(
+//   '.form__search-control'
+// );
 
 let userData = [];
 let sortedUserData = [];
@@ -130,23 +133,23 @@ const filterUsersByGender = (selectedGender, data) => {
   );
 };
 
-const getFilteredUsersByGender = (selectedGender, data) => {
-  if (selectedGender === 'male' || selectedGender === 'female') {
-    sortedUserData = filterUsersByGender(selectedGender, data);
-  }
-};
+// const getFilteredUsersByGender = (selectedGender, data) => {
+//   if (selectedGender === 'male' || selectedGender === 'female') {
+//     sortedUserData = filterUsersByGender(selectedGender, data);
+//   }
+// };
 
-const getSortedUsersByAge = (value) => {
-  if (value === 'ageAscending' || value === 'ageDescending') {
-    ageSorters[value]();
-  }
-};
+// const getSortedUsersByAge = (value) => {
+//   if (value === 'ageAscending' || value === 'ageDescending') {
+//     ageSorters[value]();
+//   }
+// };
 
-const getSortedUsersByName = (value) => {
-  if (value === 'nameAscending' || value === 'nameDescending') {
-    nameSorters[value]();
-  }
-};
+// const getSortedUsersByName = (value) => {
+//   if (value === 'nameAscending' || value === 'nameDescending') {
+//     nameSorters[value]();
+//   }
+// };
 
 const handleFormInputs = () => {
   const { value: searchValue } = formElement.search;
@@ -189,7 +192,13 @@ const handleFormInputs = () => {
   renderUserList(sortedUserData);
 };
 
+const resetForm = () => {
+  formElement.reset();
+  renderUserList(userData);
+};
+
 formElement.addEventListener('input', handleFormInputs);
 formElement.addEventListener('submit', (e) => e.preventDefault());
+resetButtonElement.addEventListener('click', resetForm);
 
 init(URL);
