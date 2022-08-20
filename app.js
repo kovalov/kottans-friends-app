@@ -3,14 +3,12 @@ const URL =
 
 const userListContainerElement = document.querySelector('.user-list');
 const formElement = document.querySelector('.form');
-// const formSearchInputElement = document.querySelector(
-//   '.form__search-control'
-// );
+const formSearchInputElement = document.querySelector(
+  '.form__search-control'
+);
 
 let userData = [];
 let sortedUserData = [];
-// let currentSearchValue = '';
-// let currentGenderValue = '';
 
 const handleErrors = (response) => {
   if (!response.ok) throw Error(response.statusText);
@@ -126,13 +124,15 @@ const nameSorters = {
   },
 };
 
-const filterUsersByGender = (gender, data) => {
-  return data.filter((dataItem) => dataItem.gender === gender);
+const filterUsersByGender = (selectedGender, data) => {
+  return data.filter(
+    ({ gender: userGender }) => userGender === selectedGender
+  );
 };
 
-const getFilteredUsersByGender = (gender, data) => {
-  if (gender === 'male' || gender === 'female') {
-    sortedUserData = filterUsersByGender(gender, data);
+const getFilteredUsersByGender = (selectedGender, data) => {
+  if (selectedGender === 'male' || selectedGender === 'female') {
+    sortedUserData = filterUsersByGender(selectedGender, data);
   }
 };
 
@@ -162,5 +162,6 @@ const handleFormInputs = () => {
 };
 
 formElement.addEventListener('input', handleFormInputs);
+formElement.addEventListener('submit', (e) => e.preventDefault());
 
 init(URL);
