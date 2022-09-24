@@ -1,11 +1,9 @@
 const URL =
-  'https://randomuser.me/api/?results=20&nat=us,dk,fr,gb&inc=gender,name,email,dob,phone,picture';
+  "https://randomuser.me/api/?results=20&nat=us,dk,fr,gb&inc=gender,name,email,dob,phone,picture";
 
-const userListContainerElement = document.querySelector('.user-list');
-const formElement = document.querySelector('.form');
-const resetButtonElement = document.querySelector(
-  '.form__reset-button'
-);
+const userListContainerElement = document.querySelector(".user-list");
+const formElement = document.querySelector(".form");
+const resetButtonElement = document.querySelector(".form__reset-button");
 
 let userData = [];
 let sortedUserData = [];
@@ -38,13 +36,7 @@ const getRequiredUserData = async (url) => {
   }));
 };
 
-const getUserListItemHTML = ({
-  fullName,
-  email,
-  age,
-  phone,
-  imageUrl,
-}) => {
+const getUserListItemHTML = ({ fullName, email, age, phone, imageUrl }) => {
   return `
 	<img
 		src="${imageUrl}"
@@ -65,8 +57,8 @@ const getUserListItemHTML = ({
 };
 
 const createUserListItem = (userDataItem) => {
-  const userListItem = document.createElement('li');
-  userListItem.classList.add('user-list__item');
+  const userListItem = document.createElement("li");
+  userListItem.classList.add("user-list__item");
   userListItem.innerHTML = getUserListItemHTML(userDataItem);
   return userListItem;
 };
@@ -75,13 +67,11 @@ const addUserListItem = (userListItem) =>
   userListContainerElement.appendChild(userListItem);
 
 const renderUserList = (userData) => {
-  userListContainerElement.innerHTML = '';
+  userListContainerElement.innerHTML = "";
   const userListItems = userData.map((userDataItem) =>
     createUserListItem(userDataItem)
   );
-  userListItems.forEach((userListItem) =>
-    addUserListItem(userListItem)
-  );
+  userListItems.forEach((userListItem) => addUserListItem(userListItem));
 };
 
 const init = async (url) => {
@@ -92,9 +82,7 @@ const init = async (url) => {
 
 const findName = (searchInput) => {
   return userData.filter((userDataItem) =>
-    userDataItem.fullName
-      .toLowerCase()
-      .includes(searchInput.toLowerCase())
+    userDataItem.fullName.toLowerCase().includes(searchInput.toLowerCase())
   );
 };
 
@@ -136,7 +124,8 @@ const handleFormInputs = () => {
 
   sortedUserData = findName(searchValue);
   sortedUserData = filterUsersByGender(filteringValue);
-  sorters[sortingValue]();
+
+  if (sortingValue || filteringValue) sorters[sortingValue]();
 
   renderUserList(sortedUserData);
 };
@@ -146,8 +135,8 @@ const resetForm = () => {
   renderUserList(userData);
 };
 
-formElement.addEventListener('input', handleFormInputs);
-formElement.addEventListener('submit', (e) => e.preventDefault());
-resetButtonElement.addEventListener('click', resetForm);
+formElement.addEventListener("input", handleFormInputs);
+formElement.addEventListener("submit", (e) => e.preventDefault());
+resetButtonElement.addEventListener("click", resetForm);
 
 init(URL);
