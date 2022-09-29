@@ -125,7 +125,7 @@ const handleFormInputs = () => {
   sortedUserData = findName(searchValue);
   sortedUserData = filterUsersByGender(filteringValue);
 
-  if (sortingValue || filteringValue) sorters[sortingValue]();
+  sortingValue && sorters[sortingValue]();
 
   renderUserList(sortedUserData);
 };
